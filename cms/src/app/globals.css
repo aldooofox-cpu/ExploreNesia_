@@ -1,0 +1,242 @@
+:root {
+  --bg: #f6f7fb;
+  --panel: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --danger: #ef4444;
+  --ok: #16a34a;
+  --border: rgba(17,24,39,0.12);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(900px 500px at 20% 10%, rgba(37,99,235,0.12), transparent), var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(17,24,39,0.04);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border-bottom: 1px solid var(--border);
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+input, select, textarea {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(37,99,235,0.45);
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+
+.col-4 { grid-column: span 4; }
+.col-6 { grid-column: span 6; }
+.col-8 { grid-column: span 8; }
+.col-12 { grid-column: span 12; }
+
+.btn {
+  background: rgba(37,99,235,0.08);
+  border: 1px solid rgba(37,99,235,0.35);
+  color: var(--primary);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn:hover {
+  background: rgba(37,99,235,0.14);
+}
+
+.btnDanger {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.35);
+  color: var(--danger);
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.badgeOk {
+  border-color: rgba(22,163,74,0.35);
+  color: rgba(22,163,74,0.95);
+}
+
+.badgeWarn {
+  border-color: rgba(245,158,11,0.35);
+  color: rgba(217,119,6,0.95);
+}
+
+.nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.nav a {
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.nav a:hover {
+  background: rgba(17,24,39,0.03);
+}
+
+.cardTitle {
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.2px;
+  margin-bottom: 10px;
+}
+
+.formGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.fieldLabel {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.inputHelp {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.tableWrap {
+  overflow: auto;
+}
+
+.tableRowActions {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* Admin header */
+.adminHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  margin: 0 -16px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.adminBrand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.adminBrandTitle {
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+.adminBrandSub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.adminNav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.adminNav a {
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.adminNav a:hover {
+  background: rgba(17,24,39,0.03);
+}
+
+.adminHeaderRight {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+
+
+
