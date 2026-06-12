@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, Alert } from "react-native";
+import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import { useState, useEffect } from "react";
 import { apiBooking, type Booking } from "../../../lib/api";
 
@@ -7,7 +7,7 @@ export default function MyBookingsScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
-  
+
   const refresh = async () => {
     setError(null);
     setLoading(true);
@@ -49,7 +49,7 @@ export default function MyBookingsScreen() {
       setUpdatingId(null);
     }
   };
-  
+
   if (loading) {
     return (
       <View style={styles.center}>
@@ -67,10 +67,14 @@ export default function MyBookingsScreen() {
   }
 
   return (
-    <FlatList>
+    <FlatList
+      contentContainerStyle={styles.listContent}
       data={data}
-      keyExtractor={(item) => item.id.toString()}
-      <View style={styles.card}>
+      keyExtractor={(item) => String(item.id)}
+      refreshing={loading}
+      onRefresh={refresh}
+      renderItem={({ item }) => (
+        <View style={styles.card}>
           <Text style={styles.title}>{item.trip?.namaTrip ?? "Trip"}</Text>
           <Text style={styles.meta}>Status: {item.status}</Text>
           <Text style={styles.meta}>Nama: {item.namaUser}</Text>
@@ -89,7 +93,31 @@ export default function MyBookingsScreen() {
             </TouchableOpacity>
           ) : null}
         </View>
-    </FlatList>
-
+      )}
+    />
   );
 }
+
+const styles = StyleSheet.create({
+  center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 16 },
+  error: { color: "#b91c1c", textAlign: "center" },
+  listContent: { padding: 12, gap: 12 },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    gap: 6,
+  },
+  title: { fontSize: 16, fontWeight: "700", marginBottom: 4 },
+  meta: { color: "#4b5563" },
+  payBtn: {
+    backgroundColor: "#16a34a",
+    borderRadius: 12,
+    paddingVertical: 10,
+    alignItems: "center",
+    marginTop: 8,
+  },
+  payBtnText: { color: "#fff", fontWeight: "800" },
+});
