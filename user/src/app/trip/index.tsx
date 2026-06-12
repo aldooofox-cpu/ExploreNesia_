@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { apiTrip, apiWisata, type Trip, type Wisata } from "../../../lib/api";
 
 export default function TripScreen() {
@@ -24,6 +24,28 @@ const load = async (filter: number | "all") => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    let mounted = true;
+
+    (async () => {
+      try {
+        const w = await apiWisata.getAll();
+        if (mounted) setWisata(w);
+      } catch {
+        // ignore
+      }
+
+      if (mounted) {
+        await load(selectedWisataId);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedWisataId]);
 
   return (
     <View>
