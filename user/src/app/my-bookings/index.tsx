@@ -61,6 +61,17 @@ export default function MyBookingsScreen() {
           <Text style={styles.meta}>Jumlah Tiket: {item.jumlahTiket}</Text>
           <Text style={styles.meta}>Total Harga: {item.totalHarga}</Text>
 
+          {item.status === "pending" ? (
+            <TouchableOpacity
+              style={[styles.payBtn, updatingId === item.id && { opacity: 0.6 }]}
+              disabled={updatingId === item.id}
+              onPress={() => handlePay(item.id)}
+            >
+              <Text style={styles.payBtnText}>
+                {updatingId === item.id ? "Memproses..." : "Bayar"}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
     </FlatList>
 
