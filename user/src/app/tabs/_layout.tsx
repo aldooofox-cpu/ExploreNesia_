@@ -20,6 +20,18 @@ export default function TabsLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="trip"
+        options={{
+          title: "Trip",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require("../../../assets/images/tabIcons/explore.png")}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
     </Tabs> 
   );
 }
