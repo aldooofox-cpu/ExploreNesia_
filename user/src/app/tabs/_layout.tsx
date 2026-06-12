@@ -32,6 +32,18 @@ export default function TabsLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="booking"
+        options={{
+          title: "Booking",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require("../../../assets/images/tabIcons/home.png")}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
     </Tabs> 
   );
 }
