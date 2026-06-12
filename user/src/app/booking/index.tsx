@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { apiTrip, apiWisata, apiBooking, type Trip, type Wisata } from "../../../lib/api";
 import { useLocalSearchParams } from "expo-router";
 
@@ -48,6 +48,41 @@ export default function BookingScreen() {
     setTripList(t);
     return t;
   };
+
+  useEffect(() => {
+    let mounted = true;
+
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        await refreshWisata();
+
+        // Load daftar trip berdasarkan filter
+        if (selectedWisataId === "all") {
+          await refreshTrips("all");
+        } else {
+          await refreshTrips(selectedWisataId);
+        }
+
+        // Jika ada deep-link tripId, pertahankan selection (nanti divalidasi oleh tripList)
+        if (initialTripId) {
+          setSelectedTripId(initialTripId);
+        }
+      } catch (e: any) {
+        if (!mounted) return;
+        setError(e?.message ?? "Gagal memuat data booking");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View>
