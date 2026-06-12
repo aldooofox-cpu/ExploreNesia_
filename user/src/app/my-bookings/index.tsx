@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react";
 import { apiBooking, type Booking } from "../../../lib/api";
 
@@ -34,6 +34,14 @@ export default function MyBookingsScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
   return (
     <View>
       <Text>My Bookings</Text>
