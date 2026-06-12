@@ -84,6 +84,45 @@ export default function BookingScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Jika tripList berubah dan tidak ada selectedTripId, pilih trip pertama
+  useEffect(() => {
+    if (tripList.length && selectedTripId === null) {
+      // gunakan microtask supaya tidak memicu render berantai secara langsung di body effect
+      queueMicrotask(() => {
+        setSelectedTripId(tripList[0].id);
+      });
+    }
+  }, [tripList, selectedTripId]);
+
+  // Jika user memilih wisata (dan tidak deep-link), reload trips saat filter berubah
+  useEffect(() => {
+    if (initialTripId) return;
+
+    let mounted = true;
+
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const t = await refreshTrips(selectedWisataId);
+        if (!mounted) return;
+
+        setSelectedTripId(t.length ? t[0].id : null);
+      } catch (e: any) {
+        if (!mounted) return;
+        setError(e?.message ?? "Gagal memuat trip");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedWisataId]);
+
   return (
     <View>
       <Text>Booking Screen</Text>
