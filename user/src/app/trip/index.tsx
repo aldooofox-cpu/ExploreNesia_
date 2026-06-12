@@ -68,7 +68,8 @@ const load = async (filter: number | "all") => {
   return (
     <View>
       <Text>Halaman Trip</Text>
-      <Picker
+      <View>
+        <Picker
           selectedValue={selectedWisataId}
           onValueChange={(v) => setSelectedWisataId(v === "all" ? "all" : Number(v))}
         >
@@ -77,11 +78,28 @@ const load = async (filter: number | "all") => {
             <Picker.Item key={w.id} label={w.nama} value={w.id} />
           ))}
         </Picker>
-
-        <FlatList
-          data={items}
-          keyExtractor={(item) => String(item.id)}
-          />
+      </View>
+      
+      <FlatList
+        data={items}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item }) => (
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => {
+              // buka form booking dengan membawa tripId
+            router.push(`/booking?tripId=${item.id}`);
+          }}
+        >
+          <Text style={styles.title}>{item.namaTrip}</Text>
+          <Text style={styles.price}>Rp {item.harga}</Text>
+          <Text numberOfLines={2} style={styles.desc}>
+            {item.deskripsi}
+          </Text>
+          <Text style={styles.meta}>Kuota: {item.kuota}</Text>
+        </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
