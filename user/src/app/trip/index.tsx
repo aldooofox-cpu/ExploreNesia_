@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { apiTrip, apiWisata, type Trip, type Wisata } from "../../../lib/api";
+import { ActivityIndicator } from "react-native";
 
 export default function TripScreen() {
   const [wisata, setWisata] = useState<Wisata[]>([]);
@@ -46,6 +47,22 @@ const load = async (filter: number | "all") => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedWisataId]);
+
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.error}>{error}</Text>
+      </View>
+    );
+  }
 
   return (
     <View>
