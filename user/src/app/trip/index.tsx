@@ -53,15 +53,6 @@ const load = async (filter: number | "all") => {
     return (
       <View style={styles.center}>
         <ActivityIndicator />
-        <Picker
-          selectedValue={selectedWisataId}
-          onValueChange={(v) => setSelectedWisataId(v === "all" ? "all" : Number(v))}
-        >
-          <Picker.Item label="Semua" value="all" />
-          {wisata.map((w) => (
-            <Picker.Item key={w.id} label={w.nama} value={w.id} />
-          ))}
-        </Picker>
       </View>
     );
   }
@@ -77,6 +68,15 @@ const load = async (filter: number | "all") => {
   return (
     <View>
       <Text>Halaman Trip</Text>
+      <Picker
+          selectedValue={selectedWisataId}
+          onValueChange={(v) => setSelectedWisataId(v === "all" ? "all" : Number(v))}
+        >
+          <Picker.Item label="Semua" value="all" />
+          {wisata.map((w) => (
+            <Picker.Item key={w.id} label={w.nama} value={w.id} />
+          ))}
+        </Picker>
     </View>
   );
 }
