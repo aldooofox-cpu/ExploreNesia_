@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { apiBooking, type Booking } from "../../../lib/api";
 
 export default function MyBookingsScreen() {
@@ -21,6 +21,19 @@ export default function MyBookingsScreen() {
     }
   };
 
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      if (!mounted) return;
+      await refresh();
+    })();
+
+    return () => {
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
   return (
     <View>
       <Text>My Bookings</Text>
