@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { useState, useMemo, useEffect } from "react";
 import { apiTrip, apiWisata, apiBooking, type Trip, type Wisata } from "../../../lib/api";
 import { useLocalSearchParams } from "expo-router";
@@ -131,6 +131,43 @@ export default function BookingScreen() {
     const tripOk = selectedTripId !== null;
     return namaOk && emailOk && qtyOk && tripOk;
   }, [form, selectedTripId]);
+
+  const handleSubmit = async () => {
+    if (!selectedTripId) {
+      Alert.alert("Booking", "Pilih trip terlebih dahulu");
+      return;
+    }
+
+    const qty = Number(form.jumlahTiket);
+    if (!Number.isFinite(qty) || qty <= 0) {
+      Alert.alert("Booking", "Jumlah tiket tidak valid");
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      setError(null);
+
+      await apiBooking.create({
+        namaUser: form.namaUser.trim(),
+        email: form.email.trim(),
+        jumlahTiket: qty,
+        tripId: selectedTripId,
+      });
+
+      Alert.alert("Booking berhasil", "Silakan cek menu My Bookings.", [
+        {
+          text: "OK",
+          onPress: () => router.replace("/my-bookings"),
+        },
+      ]);
+    } catch (e: any) {
+      setError(e?.message ?? "Gagal membuat booking");
+      Alert.alert("Booking gagal", e?.message ?? "Coba lagi");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <View>
