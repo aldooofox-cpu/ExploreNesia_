@@ -223,6 +223,22 @@ export default function BookingScreen() {
           ))}
         </Picker>
       </View>
-      
+
+      <Text style={styles.label}>Trip</Text>
+      <View style={styles.pickerWrap}>
+        <Picker
+          selectedValue={selectedTripId ?? undefined}
+          onValueChange={(v) => setSelectedTripId(v)}
+        >
+          {tripList.map((t) => (
+            <Picker.Item
+              key={t.id}
+              label={`${t.namaTrip} (Rp ${t.harga})`}
+              value={t.id}
+            />
+          ))}
+        </Picker>
+      </View>
+
   );
 }
