@@ -239,6 +239,22 @@ export default function BookingScreen() {
           ))}
         </Picker>
       </View>
-
+      
+      <TouchableOpacity
+        style={[
+          styles.button,
+          (!canSubmit || submitting) && {
+            opacity: 0.6,
+          },
+        ]}
+        disabled={!canSubmit || submitting}
+        onPress={handleSubmit}
+      >
+        <Text style={styles.buttonText}>
+          {submitting
+            ? "Membuat..."
+            : "Submit Booking"}
+        </Text>
+      </TouchableOpacity>
   );
 }
