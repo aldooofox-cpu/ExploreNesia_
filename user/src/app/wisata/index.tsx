@@ -16,3 +16,19 @@
         if (mounted) setLoading(false);
       }
     })();
+
+    if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.error}>{error}</Text>
+      </View>
+    );
+  }
