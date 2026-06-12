@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { apiTrip, apiWisata, type Trip, type Wisata } from "../../../lib/api";
-import { ActivityIndicator } from "react-native";
+import { FlatList, ActivityIndicator } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 export default function TripScreen() {
@@ -77,6 +77,11 @@ const load = async (filter: number | "all") => {
             <Picker.Item key={w.id} label={w.nama} value={w.id} />
           ))}
         </Picker>
+
+        <FlatList
+          data={items}
+          keyExtractor={(item) => String(item.id)}
+          />
     </View>
   );
 }
