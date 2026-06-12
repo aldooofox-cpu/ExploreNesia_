@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, FlatList } from "react-native";
 import { useState, useEffect } from "react";
 import { apiBooking, type Booking } from "../../../lib/api";
 
@@ -51,8 +51,10 @@ export default function MyBookingsScreen() {
   }
 
   return (
-    <View>
-      <Text>My Bookings</Text>
-    </View>
+    <FlatList>
+      data={data}
+      keyExtractor={(item) => item.id.toString()}
+    </FlatList>
+
   );
 }
