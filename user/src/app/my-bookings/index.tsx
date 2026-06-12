@@ -54,6 +54,14 @@ export default function MyBookingsScreen() {
     <FlatList>
       data={data}
       keyExtractor={(item) => item.id.toString()}
+      <View style={styles.card}>
+          <Text style={styles.title}>{item.trip?.namaTrip ?? "Trip"}</Text>
+          <Text style={styles.meta}>Status: {item.status}</Text>
+          <Text style={styles.meta}>Nama: {item.namaUser}</Text>
+          <Text style={styles.meta}>Jumlah Tiket: {item.jumlahTiket}</Text>
+          <Text style={styles.meta}>Total Harga: {item.totalHarga}</Text>
+
+        </View>
     </FlatList>
 
   );
