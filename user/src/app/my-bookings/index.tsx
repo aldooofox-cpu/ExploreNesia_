@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 import { useState } from "react";
+import { apiBooking, type Booking } from "../../../lib/api";
 
 export default function MyBookingsScreen() {
   const [data, setData] = useState<Booking[]>([]);
