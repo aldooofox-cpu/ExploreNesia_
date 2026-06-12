@@ -8,6 +8,19 @@ export default function MyBookingsScreen() {
   const [error, setError] = useState<string | null>(null);
   const [updatingId, setUpdatingId] = useState<number | null>(null);
   
+  const refresh = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      const res = await apiBooking.getAll();
+      setData(res);
+    } catch (e: any) {
+      setError(e?.message ?? "Gagal memuat booking");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <View>
       <Text>My Bookings</Text>
