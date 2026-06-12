@@ -1,8 +1,9 @@
 import { View, Text } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo,useState } from "react";
 import { apiTrip, apiWisata, type Trip, type Wisata } from "../../../lib/api";
 import { FlatList, ActivityIndicator } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 
 export default function TripScreen() {
   const [wisata, setWisata] = useState<Wisata[]>([]);
@@ -49,6 +50,8 @@ const load = async (filter: number | "all") => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedWisataId]);
 
+  const items = useMemo(() => data, [data]);
+
   if (loading) {
     return (
       <View style={styles.center}>
@@ -79,7 +82,7 @@ const load = async (filter: number | "all") => {
           ))}
         </Picker>
       </View>
-      
+
       <FlatList
         data={items}
         keyExtractor={(item) => String(item.id)}
