@@ -2,6 +2,7 @@ import { View, Text, Alert, ActivityIndicator, TextInput } from "react-native";
 import { useState, useMemo, useEffect } from "react";
 import { apiTrip, apiWisata, apiBooking, type Trip, type Wisata } from "../../../lib/api";
 import { useLocalSearchParams } from "expo-router";
+import { Picker } from "@react-native-picker/picker";
 
   type FormState = {
     namaUser: string;
@@ -208,5 +209,20 @@ export default function BookingScreen() {
         onChangeText={(t) => setForm((s) => ({ ...s, jumlahTiket: t }))}
         keyboardType="numeric"
       />
+
+      <Text style={styles.label}>Filter Wisata</Text>
+      <View style={styles.pickerWrap}>
+        <Picker
+          enabled={!initialTripId}
+          selectedValue={selectedWisataId}
+          onValueChange={(v) => setSelectedWisataId(v === "all" ? "all" : Number(v))}
+        >
+          <Picker.Item label="Semua" value="all" />
+          {wisataList.map((w) => (
+            <Picker.Item key={w.id} label={w.nama} value={w.id} />
+          ))}
+        </Picker>
+      </View>
+      
   );
 }
