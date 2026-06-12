@@ -1,4 +1,4 @@
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, ActivityIndicator } from "react-native";
 import { useState, useMemo, useEffect } from "react";
 import { apiTrip, apiWisata, apiBooking, type Trip, type Wisata } from "../../../lib/api";
 import { useLocalSearchParams } from "expo-router";
@@ -168,6 +168,15 @@ export default function BookingScreen() {
       setSubmitting(false);
     }
   };
+
+  if (loading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator />
+      </View>
+      
+    );
+  }
 
   return (
     <View>
