@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator, FlatList } from "react-native";
+import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, Alert } from "react-native";
 import { useState, useEffect } from "react";
 import { apiBooking, type Booking } from "../../../lib/api";
 
@@ -33,6 +33,22 @@ export default function MyBookingsScreen() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handlePay = async (bookingId: number) => {
+    try {
+      setUpdatingId(bookingId);
+      setError(null);
+
+      await apiBooking.updateStatus(bookingId, { status: "paid" });
+      Alert.alert("Pembayaran sukses", "Status booking berubah menjadi paid.");
+      await refresh();
+    } catch (e: any) {
+      Alert.alert("Pembayaran gagal", e?.message ?? "Coba lagi");
+      setError(e?.message ?? "Pembayaran gagal");
+    } finally {
+      setUpdatingId(null);
+    }
+  };
   
   if (loading) {
     return (
