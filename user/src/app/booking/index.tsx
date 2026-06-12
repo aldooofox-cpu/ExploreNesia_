@@ -123,6 +123,15 @@ export default function BookingScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedWisataId]);
 
+  const canSubmit = useMemo(() => {
+    const namaOk = form.namaUser.trim().length >= 2;
+    const emailOk = form.email.trim().length >= 5 && form.email.includes("@");
+    const qty = Number(form.jumlahTiket);
+    const qtyOk = Number.isFinite(qty) && qty > 0;
+    const tripOk = selectedTripId !== null;
+    return namaOk && emailOk && qtyOk && tripOk;
+  }, [form, selectedTripId]);
+
   return (
     <View>
       <Text>Booking Screen</Text>
