@@ -3,10 +3,10 @@ import { Image } from "react-native";
 
 export default function TabsLayout() {
   return (
-    <Tabs 
+    <Tabs
       screenOptions={{
-          headerShown: false,
-        }}
+        headerShown: false,
+      }}
     >
       <Tabs.Screen
         name="wisata"
@@ -44,9 +44,21 @@ export default function TabsLayout() {
           ),
         }}
       />
-    </Tabs> 
+      <Tabs.Screen
+        name="my-bookings"
+        options={{
+          title: "My Bookings",
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require("../../../assets/images/tabIcons/explore.png")}
+              style={{ width: size, height: size, tintColor: color }}
+            />
+          ),
+        }}
+      />
+
+    </Tabs>
   );
 }
-  
 
 
