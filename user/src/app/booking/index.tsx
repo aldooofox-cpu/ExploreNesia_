@@ -1,4 +1,4 @@
-import { View, Text, Alert, ActivityIndicator } from "react-native";
+import { View, Text, Alert, ActivityIndicator, TextInput } from "react-native";
 import { useState, useMemo, useEffect } from "react";
 import { apiTrip, apiWisata, apiBooking, type Trip, type Wisata } from "../../../lib/api";
 import { useLocalSearchParams } from "expo-router";
@@ -179,8 +179,34 @@ export default function BookingScreen() {
   }
 
   return (
-    <View>
-      <Text>Booking Screen</Text>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.header}>Form Booking</Text>
+
+      <Text style={styles.label}>Nama</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Nama lengkap"
+        value={form.namaUser}
+        onChangeText={(t) => setForm((s) => ({ ...s, namaUser: t }))}
+      />
+
+      <Text style={styles.label}>Email</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="email@example.com"
+        value={form.email}
+        onChangeText={(t) => setForm((s) => ({ ...s, email: t }))}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <Text style={styles.label}>Jumlah Tiket</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="1"
+        value={form.jumlahTiket}
+        onChangeText={(t) => setForm((s) => ({ ...s, jumlahTiket: t }))}
+        keyboardType="numeric"
+      />
   );
 }
