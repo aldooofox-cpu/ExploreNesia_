@@ -1,3 +1,10 @@
+import { useEffect, useState } from "react";
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+import { router } from "expo-router";
+import { apiWisata, type Wisata } from "../../../lib/api";
+
+export default function WisataScreen() {
+  const [data, setData] = useState<Wisata[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,7 +24,12 @@
       }
     })();
 
-    if (loading) {
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (loading) {
     return (
       <View style={styles.center}>
         <ActivityIndicator />
@@ -60,3 +72,23 @@
       )}
     />
   );
+}
+
+const styles = StyleSheet.create({
+  center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 16 },
+  error: { color: "#b91c1c", textAlign: "center" },
+  listContent: { padding: 12, gap: 12 },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  image: { width: "100%", height: 160 },
+  cardBody: { padding: 12 },
+  title: { fontSize: 16, fontWeight: "700", marginBottom: 6 },
+  desc: { color: "#374151", marginBottom: 8 },
+  loc: { color: "#6b7280" },
+});
+
