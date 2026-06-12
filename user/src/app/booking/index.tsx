@@ -30,7 +30,28 @@ export default function BookingScreen() {
     email: "",
     jumlahTiket: "1",
   });
+
+  const refreshWisata = async () => {
+    const w = await apiWisata.getAll();
+    setWisataList(w);
+    return w;
+  };
+
+  const refreshTrips = async (wisataId: number | "all") => {
+    if (wisataId === "all") {
+      const t = await apiTrip.getAll();
+      setTripList(t);
+      return t;
+    }
+
+    const t = await apiTrip.getByWisata(wisataId);
+    setTripList(t);
+    return t;
+  };
+
   return (
-    
+    <View>
+      <Text>Booking Screen</Text>
+    </View>
   );
 }
