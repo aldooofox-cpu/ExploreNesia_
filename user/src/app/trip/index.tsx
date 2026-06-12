@@ -1,9 +1,9 @@
-import { View, Text } from "react-native";
 import { useEffect, useMemo,useState } from "react";
 import { apiTrip, apiWisata, type Trip, type Wisata } from "../../../lib/api";
-import { FlatList, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
+
 
 export default function TripScreen() {
   const [wisata, setWisata] = useState<Wisata[]>([]);
@@ -12,7 +12,7 @@ export default function TripScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-const load = async (filter: number | "all") => {
+  const load = async (filter: number | "all") => {
     setLoading(true);
     setError(null);
     try {
@@ -69,9 +69,10 @@ const load = async (filter: number | "all") => {
   }
 
   return (
-    <View>
-      <Text>Halaman Trip</Text>
-      <View>
+    <View style={styles.container}>
+      <Text style={styles.label}>Filter Wisata</Text>
+
+      <View style={styles.pickerWrap}>
         <Picker
           selectedValue={selectedWisataId}
           onValueChange={(v) => setSelectedWisataId(v === "all" ? "all" : Number(v))}
@@ -84,25 +85,51 @@ const load = async (filter: number | "all") => {
       </View>
 
       <FlatList
+        contentContainerStyle={styles.listContent}
         data={items}
         keyExtractor={(item) => String(item.id)}
         renderItem={({ item }) => (
-        <TouchableOpacity
-          style={styles.card}
-          onPress={() => {
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => {
               // buka form booking dengan membawa tripId
-            router.push(`/booking?tripId=${item.id}`);
-          }}
-        >
-          <Text style={styles.title}>{item.namaTrip}</Text>
-          <Text style={styles.price}>Rp {item.harga}</Text>
-          <Text numberOfLines={2} style={styles.desc}>
-            {item.deskripsi}
-          </Text>
-          <Text style={styles.meta}>Kuota: {item.kuota}</Text>
-        </TouchableOpacity>
+              router.push(`/booking?tripId=${item.id}`);
+            }}
+          >
+            <Text style={styles.title}>{item.namaTrip}</Text>
+            <Text style={styles.price}>Rp {item.harga}</Text>
+            <Text numberOfLines={2} style={styles.desc}>
+              {item.deskripsi}
+            </Text>
+            <Text style={styles.meta}>Kuota: {item.kuota}</Text>
+          </TouchableOpacity>
         )}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 12, gap: 10 },
+  center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 16 },
+  error: { color: "#b91c1c", textAlign: "center" },
+  label: { fontSize: 14, fontWeight: "600" },
+  pickerWrap: {
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  listContent: { paddingTop: 4, gap: 12 },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  title: { fontSize: 16, fontWeight: "700", marginBottom: 4 },
+  price: { color: "#16a34a", fontWeight: "700", marginBottom: 6 },
+  desc: { color: "#374151", marginBottom: 8 },
+  meta: { color: "#6b7280" },
+});
