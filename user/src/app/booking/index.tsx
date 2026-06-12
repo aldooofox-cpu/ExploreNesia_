@@ -1,14 +1,14 @@
-import { View, Text, Alert, ActivityIndicator, TextInput } from "react-native";
+import { View, Text, Alert, ActivityIndicator, TextInput, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { useState, useMemo, useEffect } from "react";
 import { apiTrip, apiWisata, apiBooking, type Trip, type Wisata } from "../../../lib/api";
 import { useLocalSearchParams, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
-  type FormState = {
-    namaUser: string;
-    email: string;
-    jumlahTiket: string; // simpan string agar mudah dengan TextInput
-  };
+type FormState = {
+  namaUser: string;
+  email: string;
+  jumlahTiket: string; // simpan string agar mudah dengan TextInput
+};
 
 export default function BookingScreen() {
   const params = useLocalSearchParams<{ tripId?: string }>();
@@ -25,6 +25,10 @@ export default function BookingScreen() {
 
   const [selectedWisataId, setSelectedWisataId] = useState<number | "all">("all");
   const [selectedTripId, setSelectedTripId] = useState<number | null>(initialTripId);
+
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [form, setForm] = useState<FormState>({
     namaUser: "",
@@ -50,6 +54,7 @@ export default function BookingScreen() {
     return t;
   };
 
+  // Load wisata + trips awal
   useEffect(() => {
     let mounted = true;
 
@@ -94,6 +99,7 @@ export default function BookingScreen() {
       });
     }
   }, [tripList, selectedTripId]);
+
 
   // Jika user memilih wisata (dan tidak deep-link), reload trips saat filter berubah
   useEffect(() => {
@@ -175,13 +181,14 @@ export default function BookingScreen() {
       <View style={styles.center}>
         <ActivityIndicator />
       </View>
-      
     );
   }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Form Booking</Text>
+
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       <Text style={styles.label}>Nama</Text>
       <TextInput
@@ -239,7 +246,7 @@ export default function BookingScreen() {
           ))}
         </Picker>
       </View>
-      
+
       <TouchableOpacity
         style={[styles.button, (!canSubmit || submitting) && { opacity: 0.6 }]}
         disabled={!canSubmit || submitting}
@@ -255,5 +262,48 @@ export default function BookingScreen() {
       <TouchableOpacity style={styles.secondaryBtn} onPress={() => router.push("/my-bookings")}>
         <Text style={styles.secondaryBtnText}>Lihat My Bookings</Text>
       </TouchableOpacity>
+
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { padding: 16, gap: 12 },
+  center: { flex: 1, alignItems: "center", justifyContent: "center", padding: 16 },
+  header: { fontSize: 20, fontWeight: "800", marginBottom: 4 },
+  label: { fontSize: 13, fontWeight: "700", color: "#111827" },
+  input: {
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  pickerWrap: {
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    borderRadius: 12,
+    overflow: "hidden",
+    backgroundColor: "#fff",
+  },
+  button: {
+    backgroundColor: "#2563eb",
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginTop: 6,
+  },
+  buttonText: { color: "#fff", fontWeight: "800" },
+  secondaryBtn: {
+    borderRadius: 14,
+    paddingVertical: 12,
+    alignItems: "center",
+    marginTop: 6,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  secondaryBtnText: { color: "#111827", fontWeight: "700" },
+  errorText: { color: "#b91c1c", fontWeight: "600" },
+});
+
