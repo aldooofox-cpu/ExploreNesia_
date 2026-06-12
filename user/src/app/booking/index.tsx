@@ -1,7 +1,7 @@
 import { View, Text, Alert, ActivityIndicator, TextInput } from "react-native";
 import { useState, useMemo, useEffect } from "react";
 import { apiTrip, apiWisata, apiBooking, type Trip, type Wisata } from "../../../lib/api";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
   type FormState = {
@@ -241,20 +241,19 @@ export default function BookingScreen() {
       </View>
       
       <TouchableOpacity
-        style={[
-          styles.button,
-          (!canSubmit || submitting) && {
-            opacity: 0.6,
-          },
-        ]}
+        style={[styles.button, (!canSubmit || submitting) && { opacity: 0.6 }]}
         disabled={!canSubmit || submitting}
         onPress={handleSubmit}
       >
-        <Text style={styles.buttonText}>
-          {submitting
-            ? "Membuat..."
-            : "Submit Booking"}
-        </Text>
+        <Text style={styles.buttonText}>{submitting ? "Membuat..." : "Submit Booking"}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.secondaryBtn} onPress={() => router.back()}>
+        <Text style={styles.secondaryBtnText}>Kembali</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.secondaryBtn} onPress={() => router.push("/my-bookings")}>
+        <Text style={styles.secondaryBtnText}>Lihat My Bookings</Text>
       </TouchableOpacity>
   );
 }
