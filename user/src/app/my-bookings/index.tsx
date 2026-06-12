@@ -42,6 +42,14 @@ export default function MyBookingsScreen() {
     );
   }
 
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.error}>{error}</Text>
+      </View>
+    );
+  }
+
   return (
     <View>
       <Text>My Bookings</Text>
