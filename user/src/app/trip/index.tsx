@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import { useEffect, useState } from "react";
 import { apiTrip, apiWisata, type Trip, type Wisata } from "../../../lib/api";
 import { ActivityIndicator } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 
 export default function TripScreen() {
   const [wisata, setWisata] = useState<Wisata[]>([]);
@@ -52,6 +53,15 @@ const load = async (filter: number | "all") => {
     return (
       <View style={styles.center}>
         <ActivityIndicator />
+        <Picker
+          selectedValue={selectedWisataId}
+          onValueChange={(v) => setSelectedWisataId(v === "all" ? "all" : Number(v))}
+        >
+          <Picker.Item label="Semua" value="all" />
+          {wisata.map((w) => (
+            <Picker.Item key={w.id} label={w.nama} value={w.id} />
+          ))}
+        </Picker>
       </View>
     );
   }
