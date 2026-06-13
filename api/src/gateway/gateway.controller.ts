@@ -53,10 +53,34 @@ export class GatewayController {
 
 //trip
   @Post('trip')
+  createTrip(@Body() dto: CreateTripDto) {
+    return this.tripService.create(dto);
+  }
+
   @Get('trip')
+  getAllTrip() {
+    return this.tripService.findAll();
+  }
+
+  @Get('trip/wisata/:wisataId')
+  getTripByWisata(@Param('wisataId') wisataId: string) {
+    return this.tripService.findByWisata(+wisataId);
+  }
+
   @Get('trip/:id')
+  getTripById(@Param('id') id: string) {
+    return this.tripService.findOne(+id);
+  }
+
   @Patch('trip/:id')
-  @Delete('trip/:id') 
+  updateTrip(@Param('id') id: string, @Body() dto: UpdateTripDto) {
+    return this.tripService.update(+id, dto);
+  }
+
+  @Delete('trip/:id')
+  deleteTrip(@Param('id') id: string) {
+    return this.tripService.remove(+id);
+  }
 }
 
 
