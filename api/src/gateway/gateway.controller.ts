@@ -8,6 +8,7 @@ import {
   Body,
 } from '@nestjs/common';
 
+
 import { WisataService } from '../wisata/wisata.service';
 import { TripService } from '../trip/trip.service';
 import { BookingService } from '../booking/booking.service';
@@ -15,7 +16,8 @@ import { CreateWisataDto } from '../wisata/dto/create-wisata.dto';
 import { UpdateWisataDto } from '../wisata/dto/update-wisata.dto';
 import { CreateTripDto } from '../trip/dto/create-trip.dto';
 import { UpdateTripDto } from '../trip/dto/update-trip.dto';
-
+import { CreateBookingDto } from '../booking/dto/create-booking.dto';
+import { UpdateStatusDto } from '../booking/dto/update-status.dto';
 
 @Controller('api')
 export class GatewayController {
@@ -25,7 +27,7 @@ export class GatewayController {
     private readonly bookingService: BookingService,
   ) {}
 
-//Wisata
+  // -------------------- wisata --------------------
   @Post('wisata')
   createWisata(@Body() dto: CreateWisataDto) {
     return this.wisataService.create(dto);
@@ -51,7 +53,7 @@ export class GatewayController {
     return this.wisataService.remove(+id);
   }
 
-//trip
+  // -------------------- trip --------------------
   @Post('trip')
   createTrip(@Body() dto: CreateTripDto) {
     return this.tripService.create(dto);
@@ -81,6 +83,26 @@ export class GatewayController {
   deleteTrip(@Param('id') id: string) {
     return this.tripService.remove(+id);
   }
+
+  // -------------------- booking --------------------
+  @Post('booking')
+  createBooking(@Body() dto: CreateBookingDto) {
+    return this.bookingService.create(dto);
+  }
+
+  @Get('booking')
+  getAllBooking() {
+    return this.bookingService.findAll();
+  }
+
+  @Patch('booking/:id')
+  updateBookingStatus(
+    @Param('id') id: string,
+    @Body() dto: UpdateStatusDto,
+  ) {
+    return this.bookingService.updateStatus(+id, dto);
+  }
 }
+
 
 
