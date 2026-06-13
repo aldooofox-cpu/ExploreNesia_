@@ -5,6 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WisataModule } from './wisata/wisata.module';
 import { TripModule } from './trip/trip.module';
 import { BookingModule } from './booking/booking.module';
+import { MediaModule } from './media/media.module';
+import { GatewayModule } from './gateway/gateway.module';
+
 
 @Module({
   imports: [
@@ -29,6 +32,8 @@ import { BookingModule } from './booking/booking.module';
     WisataModule,
     TripModule,
     BookingModule,
+    MediaModule,
+    GatewayModule,
   ],
   controllers: [AppController],
 })
