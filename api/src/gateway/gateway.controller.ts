@@ -8,6 +8,7 @@ import { BookingService } from '../booking/booking.service';
 import { CreateWisataDto } from '../wisata/dto/create-wisata.dto';
 import { UpdateWisataDto } from '../wisata/dto/update-wisata.dto';
 
+
 @Controller('api')
 export class GatewayController {
   constructor(
@@ -23,6 +24,12 @@ export class GatewayController {
   @Patch('wisata/:id')
   @Delete('wisata/:id')
 
+//trip
+  @Post('trip')
+  @Get('trip')
+  @Get('trip/:id')
+  @Patch('trip/:id')
+  @Delete('trip/:id') 
 }
 
 
