@@ -48,26 +48,27 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 }
 
 export const apiWisata = {
-  getAll: () => request<Wisata[]>('/wisata'),
-  getById: (id: number) => request<Wisata>(`/wisata/${id}`),
+  getAll: () => request<Wisata[]>('/api/wisata'),
+  getById: (id: number) => request<Wisata>(`/api/wisata/${id}`),
 };
 
 export const apiTrip = {
-  getAll: () => request<Trip[]>('/trip'),
-  getByWisata: (wisataId: number) => request<Trip[]>(`/trip/wisata/${wisataId}`),
+  getAll: () => request<Trip[]>('/api/trip'),
+  getByWisata: (wisataId: number) => request<Trip[]>(`/api/trip/wisata/${wisataId}`),
 };
 
 export const apiBooking = {
   create: (payload: { namaUser: string; email: string; jumlahTiket: number; tripId: number }) =>
-    request<Booking>('/booking', {
+    request<Booking>('/api/booking', {
       method: 'POST',
       body: JSON.stringify(payload),
     }),
-  getAll: () => request<Booking[]>('/booking'),
+  getAll: () => request<Booking[]>('/api/booking'),
   updateStatus: (id: number, payload: { status: 'pending' | 'paid' }) =>
-    request<Booking>(`/booking/${id}`, {
+    request<Booking>(`/api/booking/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(payload),
     }),
 };
+
 
